@@ -1,6 +1,5 @@
 // Imports
 const express = require('express');
-const path = require('path');
 const Mailjet = require('node-mailjet');
 
 // Create Express application
