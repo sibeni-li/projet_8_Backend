@@ -27,9 +27,6 @@ app.use((req, res, next) => {
     next();
 });
 
-//Coonect app to Frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
-
 //Controller for send email
 app.post('/send-email', (req, res) => {
     const { name, nameSociety, email, message } = req.body;
@@ -42,12 +39,12 @@ app.post('/send-email', (req, res) => {
         Messages: [
             {
                 From: {
-                    Email: "contact-portfolio@sibeni.li",
-                    Name: `${name}`,
+                    Email: process.env.SENDEREMAIL,
+                    Name: "Lisa Sibeni",
                 },
                 To: [
                     {
-                        Email: "contact@sibeni.li",
+                        Email: process.env.RECEIPTEMAIL,
                         Name: "Lisa Sibeni",
                     },
                 ],
@@ -59,11 +56,11 @@ app.post('/send-email', (req, res) => {
     request
     .then((result) => {
         console.log(result.body);
-        res.status(200).send('Email envoyé avec succès!');
+        res.status(200).json({ message : 'Email envoyé avec succès!'});
     })
         .catch((err) => {
             console.error(err.statusCode);
-            res.status(500).send('Erreur lors de l\'envoi de l\'email.');
+            res.status(500).json({message : 'Erreur lors de l\'envoi de l\'email.'});
         });
 });
 

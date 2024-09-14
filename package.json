@@ -4,14 +4,17 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --env-file=.env server.js",
+    "start": "node --env-file=.env server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0",
-    "node-mailjet": "^6.0.6",
+    "node-mailjet": "^6.0.6"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.4"
   }
 }
