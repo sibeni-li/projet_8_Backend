@@ -14,7 +14,10 @@ importers:
       node-mailjet:
         specifier: ^6.0.6
         version: 6.0.6
-      
+      nodemon:
+        specifier: ^3.1.4
+        version: 3.1.4
+  
 
 packages:
 
