@@ -15,11 +15,6 @@ importers:
         specifier: ^6.0.6
         version: 6.0.6
       
-    devDependencies": 
-      nodemon:
-        specifier: ^3.1.4
-        version: 3.1.4
-  
 
 packages:
 
