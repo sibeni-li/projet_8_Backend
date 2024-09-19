@@ -2,10 +2,10 @@
 const express = require('express');
 const Mailjet = require('node-mailjet');
 
-// Create Express application
+// Create an Express application
 const app = express();
 
-//Connect to Mailjet
+//Connect to Mailjet API using environment variables for authentication
 const mailjet = Mailjet.apiConnect(
     process.env.MJ_APIKEY_PUBLIC,
     process.env.MJ_APIKEY_PRIVATE,
@@ -15,10 +15,10 @@ const mailjet = Mailjet.apiConnect(
     } 
 );
 
-// Middleware to parse JSON bodies
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
-//CORS middleware
+//CORS middleware to allow cross-origin requests
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -26,14 +26,17 @@ app.use((req, res, next) => {
     next();
 });
 
-//Controller for send email
+// POST route handler for sending emails
 app.post('/send-email', (req, res) => {
+    // Extract data from request body
     const { name, nameSociety, email, message } = req.body;
 
+    // Validate required fields
     if (!name || !email || !message) {
         return res.status(400).send('Données manquantes');
     }
 
+    // Prepare and send email using Mailjet
     const request = mailjet.post('send', { version: 'v3.1' }).request({
         Messages: [
             {
@@ -52,6 +55,7 @@ app.post('/send-email', (req, res) => {
             },
         ],
     });
+    // Handle the response from Mailjet
     request
     .then((result) => {
         console.log(result.body);
@@ -63,4 +67,5 @@ app.post('/send-email', (req, res) => {
         });
 });
 
+// Export the Express application
 module.exports = app;
